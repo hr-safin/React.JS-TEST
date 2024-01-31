@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ShowList = ({show, onShowClick}) => {
+const ShowList = ({shows, onShowClick}) => {
     return (
         <div className="show-list">
         <h2>Show List</h2>
