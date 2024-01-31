@@ -2,6 +2,7 @@
 import React from 'react';
 
 const ShowDetails = ({ show, onBookTicket }) => {
+    console.log(show)
   return (
     <div className="show-details">
       <h2>Show Details</h2>

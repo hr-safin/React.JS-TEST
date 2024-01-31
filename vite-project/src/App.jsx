@@ -9,8 +9,8 @@ import TicketForm from './Components/TicketForm/TicketForm';
 
 const App = () => {
   const [shows, setShows] = useState([]);
-  const [selectedShow, setSelectedShow] = useState(null);
-  const [bookingData, setBookingData] = useState(null);
+  const [selectedShow, setSelectedShow] = useState([]);
+  const [bookingData, setBookingData] = useState([]);
 
   useEffect(() => {
     // Fetch shows from the API
@@ -24,7 +24,7 @@ const App = () => {
   };
 
   const handleBookTicket = (show) => {
-    setSelectedShow(null);
+    setSelectedShow();
     setBookingData(show);
   };
 
