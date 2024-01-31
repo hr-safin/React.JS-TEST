@@ -35,9 +35,10 @@ const App = () => {
     <div className='app'>
       {selectShow && <ShowDetails show={selectShow.show} onBookingTicket={handleBookShow} />}
 
-      {!selectShow && !bookingData && <ShowList shows={shows} onShowClick={handleShow} />}
+      {!selectShow && !bookingData && <ShowList show={shows} onShowClick={handleShow} />}
 
       {bookingData && <TicketForm show={bookingData} onSubmit={handleTicketSubmit} />}
+      ss
     </div>
   );
 };
