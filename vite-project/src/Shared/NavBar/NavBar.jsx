@@ -1,35 +1,44 @@
-import React from "react";
+import React from 'react'
+import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
 
-const NavBar = () => {
-  return (
-    <nav className="navbar  px-5 py-3 shadow-md navbar-expand-lg navbar-light bg-body-tertiary">
-  <div className="container-fluid">
-    <h3>Cineplex</h3>
-    <button
-      data-mdb-collapse-init
-      className="navbar-toggler"
-      type="button"
-      data-mdb-target="#navbarTogglerDemo02"
-      aria-controls="navbarTogglerDemo02"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i className="fas fa-bars"></i>
-    </button>
-    <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li className="nav-item pr-4">
-          <a className="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link active" href="#">Show</a>
-        </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-  );
-};
+const Navbar = () => {
+    return (
+        <>
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <div className="container py-2">
+                    <h3>Cineplex</h3>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    {/* means */}
+                    <div className="collapse navbar-collapse align-middle" id="navbarNav">
+                        <ul className="navbar-nav ms-auto nav_ul align-items-center">
+                            {/* <li className="nav-item dropdown">
+                                <Link className="nav-link dropdown-toggle" to="/about" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    About
+                                </Link>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a className="dropdown-item" href="/">Action</a></li>
+                                    <li><a className="dropdown-item" href="/">Another action</a></li>
+                                    <li><a className="dropdown-item" href="/">Something else here</a></li>
+                                </ul>
+                            </li> */}
+                            <li className="nav-item">
+                                <Link className="nav-link" to="">Home</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/services">Show</Link>
+                            </li>
+                            
+                            
+                        </ul>
+                    </div>
+                    {/* end */}
+                </div>
+            </nav>
+        </>
+    )
+}
 
-export default NavBar;
+export default Navbar
