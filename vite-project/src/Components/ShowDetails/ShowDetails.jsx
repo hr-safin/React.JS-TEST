@@ -1,4 +1,4 @@
-// ShowDetail.js
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
