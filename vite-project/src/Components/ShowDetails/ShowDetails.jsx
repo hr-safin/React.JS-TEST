@@ -1,5 +1,5 @@
 // ShowDetail.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
@@ -14,6 +14,9 @@ const ShowDetail = () => {
     name: '',
     email: '',
   });
+
+  // Create a ref for the form
+  const formRef = useRef(null);
 
   useEffect(() => {
     const fetchShowDetail = async () => {
@@ -58,6 +61,9 @@ const ShowDetail = () => {
     });
 
     console.log('Ticket booked:', ticketDetails);
+
+    // Reset the form
+    formRef.current.reset();
   };
 
   return (
@@ -68,7 +74,7 @@ const ShowDetail = () => {
             <div>
               <h1 className=' text-center'>{show.name}</h1>
               <p>{show.summary}</p>
-              <Form onSubmit={handleSubmit}>
+              <Form ref={formRef} onSubmit={handleSubmit}>
                 <Form.Group controlId="formName">
                   <Form.Label>Name:</Form.Label>
                   <Form.Control type="text" placeholder="Enter your name" name="name" onChange={handleChange} />
