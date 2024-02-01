@@ -1,46 +1,46 @@
-// src/App.js
+// App.js
 import React, { useState, useEffect } from 'react';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import axios from 'axios';
-
-import './App.css'; // Add your own styles or use Bootstrap
-import ShowDetails from './Components/ShowDetails/ShowDetails';
 import ShowList from './Components/ShowLists/ShowList';
-import TicketForm from './Components/TicketForm/TicketForm';
+import ShowDetail from './Components/ShowDetails/ShowDetails';
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 
-const App = () => {
+function App() {
   const [shows, setShows] = useState([]);
-  const [selectedShow, setSelectedShow] = useState([]);
-  const [bookingData, setBookingData] = useState([]);
 
   useEffect(() => {
-    // Fetch shows from the API
-    axios.get('https://api.tvmaze.com/search/shows?q=all')
-      .then((response) => setShows(response.data))
-      .catch((error) => console.error('Error fetching shows:', error));
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://api.tvmaze.com/search/shows?q=all');
+        setShows(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const handleShowClick = (show) => {
-    setSelectedShow(show);
-  };
-
-  const handleBookTicket = (show) => {
-    setSelectedShow();
-    setBookingData(show);
-  };
-
-  const handleTicketSubmit = (userData) => {
-    // Perform ticket booking logic here
-    console.log('Ticket booked:', { ...bookingData, userData });
-    setBookingData(null);
-  };
+  const router = new createBrowserRouter([
+    {
+      path : "/",
+      element : <ShowList shows={shows} />
+    },
+    {
+      path : "/show/:id",
+      element :<ShowDetail />
+    }
+  ])
 
   return (
-    <div className="app">
-      {selectedShow && <ShowDetails show={selectedShow.show} onBookTicket={handleBookTicket} />}
-      {!selectedShow && !bookingData && <ShowList shows={shows} onShowClick={handleShowClick} />}
-      {bookingData && <TicketForm show={bookingData} onSubmit={handleTicketSubmit} />}
-    </div>
+    <>
+    <RouterProvider router={router}></RouterProvider>
+    </>
   );
-};
+}
 
 export default App;
