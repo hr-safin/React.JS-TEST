@@ -1,12 +1,32 @@
 // ShowDetail.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-const ShowDetail = ({ match }) => {
+const ShowDetail = () => {
+  const { id } = useParams();
+  const [show, setShow] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    showName: '',
   });
+
+  useEffect(() => {
+    const fetchShowDetail = async () => {
+      try {
+        const response = await fetch(`https://api.tvmaze.com/shows/${id}`);
+        const data = await response.json();
+        setShow(data);
+      } catch (error) {
+        console.error('Error fetching show details:', error);
+      }
+    };
+
+    fetchShowDetail();
+  }, [id]);
 
   const handleChange = (e) => {
     setFormData({
@@ -17,27 +37,44 @@ const ShowDetail = ({ match }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your logic to handle form submission
-    console.log('Form submitted:', formData);
+    // Add your logic to handle form submission and store ticket details in local storage
+    const ticketDetails = {
+      showName: show.name,
+      name: formData.name,
+      email: formData.email,
+    };
+    const bookedTickets = JSON.parse(localStorage.getItem('bookedTickets')) || [];
+    bookedTickets.push(ticketDetails);
+    localStorage.setItem('bookedTickets', JSON.stringify(bookedTickets));
+    console.log('Ticket booked:', ticketDetails);
   };
 
   return (
-    <div>
-      <h1>Show Details</h1>
-      {/* Display show details using match.params.id */}
-      <form onSubmit={handleSubmit}>
-        <label>Name:</label>
-        <input type="text" name="name" onChange={handleChange} />
-        <br />
-        <label>Email:</label>
-        <input type="email" name="email" onChange={handleChange} />
-        <br />
-        <label>Show Name:</label>
-        <input type="text" name="showName" value={formData.showName} readOnly />
-        <br />
-        <button type="submit">Book Ticket</button>
-      </form>
-    </div>
+    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
+      <Row>
+        <Col xs={12} md={8} lg={6}>
+          {show && (
+            <div>
+              <h1>{show.name}</h1>
+              <p>{show.summary}</p>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="formName">
+                  <Form.Label>Name:</Form.Label>
+                  <Form.Control type="text" placeholder="Enter your name" name="name" onChange={handleChange} />
+                </Form.Group>
+                <Form.Group controlId="formEmail">
+                  <Form.Label className='mt-2'>Email:</Form.Label>
+                  <Form.Control type="email" placeholder="Enter your email" name="email" onChange={handleChange} />
+                </Form.Group>
+                <button type="submit" className="btn mt-4 btn-primary">
+                  Book Ticket
+                </button>
+              </Form>
+            </div>
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
