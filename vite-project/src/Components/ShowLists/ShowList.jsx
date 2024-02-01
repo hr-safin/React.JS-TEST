@@ -14,7 +14,7 @@ const ShowList = ({ shows }) => {
         <Row className='g-5 justify-content-center'>
           {shows.map((show) => (
             <Col key={show.show.id} xs={12} sm={6} md={3} lg={4}>
-              <Card style={{ width: '22rem' }} className="mb-3">
+              <Card style={{ width: '23rem' }} className="mb-3">
                 {show.show.image && <Card.Img className='object-fit' height={350} variant="top" src={show.show.image.medium} alt={show.show.name} />}
                 <Card.Body className='text-center p-4'>
                   <h4>{show.show.name}</h4>
