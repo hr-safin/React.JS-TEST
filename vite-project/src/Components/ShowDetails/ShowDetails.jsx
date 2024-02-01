@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Swal from 'sweetalert2';
 
 const ShowDetail = () => {
   const { id } = useParams();
@@ -46,16 +47,26 @@ const ShowDetail = () => {
     const bookedTickets = JSON.parse(localStorage.getItem('bookedTickets')) || [];
     bookedTickets.push(ticketDetails);
     localStorage.setItem('bookedTickets', JSON.stringify(bookedTickets));
+
+    // Show SweetAlert notification
+    Swal.fire({
+      icon: 'success',
+      title: 'Ticket Booked!',
+      text: 'You have successfully booked the ticket.',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'OK',
+    });
+
     console.log('Ticket booked:', ticketDetails);
   };
 
   return (
-    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
-      <Row>
-        <Col xs={12} md={8} lg={6}>
+    <Container className="d-flex align-items-center" style={{ minHeight: '100vh' }}>
+      <Row className="justify-content-center w-100">
+        <Col xs={12} md={8} lg={5}>
           {show && (
             <div>
-              <h1>{show.name}</h1>
+              <h1 className=' text-center'>{show.name}</h1>
               <p>{show.summary}</p>
               <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formName">
